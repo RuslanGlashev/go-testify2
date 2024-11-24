@@ -62,14 +62,10 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	require.NotEmpty(t, req)
 
 	require.Equal(t, totalCount, responseRecorder.Code)
-	require.Len(t, responseRecorder.Body.String(), totalCount)
 
 	body := responseRecorder.Body.String()
 	list := strings.Split(body, ",")
-
-	if len(list) != totalCount {
-		t.Errorf("expected cafe count: %d, got %d", totalCount, len(list))
-	}
+	require.Len(t, len(list), totalCount)
 
 	//ничего непонятно, что и как делать. Очень странное задание
 }
