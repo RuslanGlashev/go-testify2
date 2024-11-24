@@ -61,7 +61,7 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	}
 	require.NotEmpty(t, req)
 
-	require.Equal(t, totalCount, responseRecorder.Code)
+	require.Equal(t, "moscow", responseRecorder.Code) //сюда как-то надо запихать moscow, но там такое объяснение урока, что просто слезы
 
 	body := responseRecorder.Body.String()
 	list := strings.Split(body, ",")
