@@ -56,7 +56,13 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	handler.ServeHTTP(responseRecorder, req)
 
 	// здесь нужно добавить необходимые проверки
+	if status := responseRecorder.Code; status != http.StatusOK {
+		t.Errorf("expected status code: %d, got %d", http.StatusOK, status)
+	}
 	require.NotEmpty(t, req)
+
+	require.Equal(t, totalCount, responseRecorder.Code)
+	require.Len(t, responseRecorder.Body.String(), totalCount)
 
 	body := responseRecorder.Body.String()
 	list := strings.Split(body, ",")
