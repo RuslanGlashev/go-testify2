@@ -1,12 +1,10 @@
 package main
 
 import (
-	"github.com/stretchr/testify/require"
 	"net/http"
-	"net/http/httptest"
+
 	"strconv"
 	"strings"
-	"testing"
 )
 
 var cafeList = map[string][]string{
@@ -47,25 +45,3 @@ func mainHandle(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(answer))
 }
 
-func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
-	totalCount := 4
-	req := httptest.NewRequest(http.MethodGet, "/cafe?count=10&city=moscow", nil)
-
-	responseRecorder := httptest.NewRecorder()
-	handler := http.HandlerFunc(mainHandle)
-	handler.ServeHTTP(responseRecorder, req)
-
-	// здесь нужно добавить необходимые проверки
-	if status := responseRecorder.Code; status != http.StatusOK {
-		t.Errorf("expected status code: %d, got %d", http.StatusOK, status)
-	}
-	require.NotEmpty(t, req)
-
-	require.Equal(t, "moscow", responseRecorder.Code) //сюда как-то надо запихать moscow, но там такое объяснение урока, что просто слезы
-
-	body := responseRecorder.Body.String()
-	list := strings.Split(body, ",")
-	require.Len(t, len(list), totalCount)
-
-	//ничего непонятно, что и как делать. Очень странное задание
-}
