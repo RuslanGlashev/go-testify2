@@ -31,7 +31,7 @@ func TestMainHandlerWhenCityWrong(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
-	require.Equal(t, []byte("wrong city value"), responseRecorder.Body)
+	require.Equal(t, "wrong city value", responseRecorder.Body.String())
 	require.Equal(t, http.StatusBadRequest, responseRecorder.Code)
 
 }
