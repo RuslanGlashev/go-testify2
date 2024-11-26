@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
@@ -18,7 +19,7 @@ func TestMainHandlerWhenOk(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
-	require.NotEmpty(t, req)
+	assert.NotEmpty(t, responseRecorder.Body)
 	require.Equal(t, 200, responseRecorder.Code)
 }
 
@@ -45,6 +46,6 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 
 	body := responseRecorder.Body.String()
 	list := strings.Split(body, ",")
-	require.Len(t, len(list), totalCount)
+	assert.Len(t, list, totalCount)
 
 }
