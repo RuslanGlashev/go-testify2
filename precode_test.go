@@ -20,7 +20,7 @@ func TestMainHandlerWhenOk(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 	assert.NotEmpty(t, responseRecorder.Body)
-	require.Equal(t, 200, responseRecorder.Code)
+	require.Equal(t, http.StatusOK, responseRecorder.Code)
 }
 
 //Город, который передаётся в параметре city, не поддерживается.
@@ -32,7 +32,7 @@ func TestMainHandlerWhenCityWrong(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 
-	require.Equal(t, 400, responseRecorder.Code)
+	require.Equal(t, http.StatusBadRequest, responseRecorder.Code)
 
 }
 
@@ -47,5 +47,7 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
 	body := responseRecorder.Body.String()
 	list := strings.Split(body, ",")
 	assert.Len(t, list, totalCount)
+
+	require.Equal(t, http.StatusOK, responseRecorder.Code)
 
 }
